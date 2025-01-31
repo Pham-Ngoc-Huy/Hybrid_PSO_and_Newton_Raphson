@@ -6,7 +6,7 @@ using namespace std;
 //global variable
 //declare function
 double function(double x) {
-    return x*x*x*x*x*x;
+    return x*x;
 };
 int main() {
     double val = 2;
@@ -14,6 +14,6 @@ int main() {
     int n = 3;
     double x;
     double y = 2*x + 1;
-    double result = dev(function,n,val);
+    double result = dev(function,val);
     cout<<result<<endl;
 }

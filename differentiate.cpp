@@ -59,5 +59,8 @@ double dev(double (*func)(double), double& val) {
     return (func(val + h) - func(val - h)) / (2 * h);
 }
 
+double operator^(double base, int exp) {
+    return std::pow(base, exp);
+}
 
 

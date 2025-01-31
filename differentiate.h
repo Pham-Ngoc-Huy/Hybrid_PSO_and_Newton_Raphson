@@ -28,8 +28,21 @@ class AutoDiffVar {
         AutoDiffVar operator*(const AutoDiffVar& other) const;
         AutoDiffVar operator/(const AutoDiffVar& other) const;
 };
-#endif
+#endif;
 
-//derivative function
-double dev(double (*func)(double), int& n, double& val);
+#ifndef CAL_H
+#define CAL_H
+
+class cal {
+    double dev(double (*func)(double),double& val);
+    //constructor
+    public:
+        double value;
+
+        cal(double val):value(val) {}
+
+        cal operator^(int exp) const;
+        cal sqrt() const;
+};
+#endif;
 
