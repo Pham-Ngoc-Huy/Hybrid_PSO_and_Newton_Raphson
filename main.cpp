@@ -1,21 +1,19 @@
 #include <iostream>
+#include "differentiate.h"
+#include <cmath>
 using namespace std;
 
-
+//global variable
+//declare function
 double function(double x) {
-    return x * x; 
-}
-
-// Numerical derivative using central difference method
-double derivative(double (*func)(double), double x, double h) {
-    return (func(x + h) - func(x - h)) / (2 * h);
-}
-
+    return x*x*x*x*x*x;
+};
 int main() {
-    double x = 3.0; // Point where we compute the derivative
-    double h = 0.00001; // Small step size
-    double result = derivative(function, x, h);
-
-    cout << "Derivative at x = " << x << " is approximately " << result << std::endl;
-    return 0;
+    double val = 2;
+    double h = 10e-10;
+    int n = 3;
+    double x;
+    double y = 2*x + 1;
+    double result = dev(function,n,val);
+    cout<<result<<endl;
 }
