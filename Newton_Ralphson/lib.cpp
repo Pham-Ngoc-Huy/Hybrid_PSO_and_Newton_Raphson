@@ -3,6 +3,7 @@
 #include <vector>
 #include <regex>
 #include <functional>
+#include <cmath>
 
 using namespace std;
 
@@ -40,7 +41,6 @@ class Differentiator {
             return result;
         }
 
-        // Computes the derivative of a term
         string differentiateTerm(const Term& term) {
             if (term.exponent == 0) return "";  
 
@@ -52,7 +52,7 @@ class Differentiator {
             if (newExp == 1) 
                 return to_string((int)newCoef) + "x"; 
 
-            return to_string((int)newCoef) + "x^" + to_string(newExp);  // General case
+            return to_string((int)newCoef) + "x^" + to_string(newExp);
         }
 
     public:
@@ -94,21 +94,40 @@ class NewtonRalpson_Calculation : public Differentiator{
     protected:
         double epsilon;
         double evaluateFunction(const string& expression, double x){
-            if getline(expression, "^" ||)
+            if(expression == "x^2 - 4") return x*x - 4
+            if(expression == "x^3 -2x + 1") return x*x*x - 2*x + 1;
+            return 0;
         }
     public:
+        // constructor:
+        NewtonRalpson_Calculation(double tol = 1e-6) : epsilon(tol){}
 
-};
+        //Newton Ralphson Iteration
+        double findRoot(const string& function, double x0, int maxIterations = 100) {
+            string derivative = differentiate(function);
+
+            cout<< "Derivative: " << derivative <<endl;
+
+            for (int i = 0; i < maxIterations; i++){
+
+                }
+                double x1 = x0 - (f_x / f_prime_x);
+                cout << "Iteration" << i + 1<<": x = "<<x1<<endl;
+
+                if (fabs(x1-x0) < epsilon) 
+                    return x1; // convergence check            
+                x0 = x1;
+        }
+        cout << "Max iterations reached, returning las approximation.\n"
+        return x0;
+    };
 int main() {
-    // Create object
-    Differentiator diff;
+    NewtonRaphson_Calculation newtonSolver;
+    
+    string function = "x^2 - 4";
+    double initialGuess = 3.0;
 
-    string input;
-    cout << "Enter a function (e.g., x^2 + 3x + 5): ";
-    getline(cin, input);
-
-    string derivative = diff.differentiate(input);
-    cout << "Derivative: " << derivative << endl;
-
+    double root = newtonSolver.findRoot(function, initialGuess);
+    cout << "Root found: " << root << endl;
     return 0;
 }
