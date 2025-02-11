@@ -121,6 +121,8 @@ class NewtonRalpson_Calculation : public Differentiator{
         cout << "Max iterations reached, returning las approximation.\n"
         return x0;
     };
+class Calculate_IRR : public NewtonRalphson_Calculation {}
+class Calculate_EIR : public NewtonRalphson_Calculation {}
 int main() {
     NewtonRaphson_Calculation newtonSolver;
     
