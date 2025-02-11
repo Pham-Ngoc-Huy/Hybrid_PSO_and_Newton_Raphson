@@ -37,6 +37,10 @@ class Differentiator {
                 if (!varStr.empty()) {
                     result.exponent = expStr.empty() ? 1 : stoi(expStr);
                 }
+                // Handle logarit/ln
+                if ()
+
+                // Handle square -> sqrt(func,x, y)
             }
             return result;
         }
@@ -57,14 +61,9 @@ class Differentiator {
 
     public:
         // Constructor
-        Differentiator() {
-            cout << "Differentiator object created.\n";
-        }
-
+        Differentiator() {}
         // Destructor
-        ~Differentiator() {
-            cout << "Differentiator object destroyed.\n";
-        }
+        ~Differentiator() {}
 
         // Differentiates a full expression
         string differentiate(const string& expression) {
@@ -84,11 +83,16 @@ class Differentiator {
             }
 
             string result;
+            
             for (const auto& part : derivatives) {
                 result += part + " ";
             }
             return result.empty() ? "0" : result;
-        }
+        };
+
+        virtual void calculate_irr() const {} = 0;
+        virtual void calculate_eir() const {} = 0;
+        
     };
 class NewtonRalpson_Calculation : public Differentiator{
     protected:
@@ -121,8 +125,51 @@ class NewtonRalpson_Calculation : public Differentiator{
         cout << "Max iterations reached, returning las approximation.\n"
         return x0;
     };
-class Calculate_IRR : public NewtonRalphson_Calculation {}
-class Calculate_EIR : public NewtonRalphson_Calculation {}
+class Calculate_IRR : public NewtonRalphson_Calculation {
+    protected:
+        double p_cash_out;
+        double tenor;
+        double p_instalment;
+        double p_instalment_last;
+        double precision = 1e-8;
+        double max_iterations;
+        double initial_guess = 0.1 
+    public:
+        //constructor:
+
+        // calculate
+        void calculate_irr (){
+            for (int i = 0; i < max_iterations, i++){
+                npv = -cash_out;
+                npv_derivative = 0;
+                for (int j = 0; j < tenor; j++){
+                    npv += p_instalment/((1+r) ** t);
+                    npv_derivative -= t * p_instalment/((1+r)**(t+1));
+                }
+
+                // final instalment
+                npv += p_instalment_last /((1+r) ** tenor);
+                npv_derivative -= tenor * p_instalment_last/ ((1+r)**(tenor + 1));
+
+
+                // check the condition is near the threshold or not to continue
+                if abs(npv) < precision:
+                    return r;
+                r -= npv/npv_derivative;
+
+            return None
+            }
+        }
+
+        
+};
+class Calculate_EIR : public NewtonRalphson_Calculation {
+    protected:
+    public:
+        void calculation_eir (){
+
+        }
+};
 int main() {
     NewtonRaphson_Calculation newtonSolver;
     
