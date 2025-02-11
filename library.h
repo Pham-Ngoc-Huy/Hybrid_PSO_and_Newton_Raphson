@@ -4,8 +4,7 @@
 using namespace std;
 
 class A {
-    private:
-    protected:
+
     public:
 };
 

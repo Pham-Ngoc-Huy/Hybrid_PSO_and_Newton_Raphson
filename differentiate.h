@@ -36,6 +36,7 @@ class AutoDiffVar {
 class cal {
     double dev(double (*func)(double),double& val);
     //constructor
+    d
     public:
         double value;
 
