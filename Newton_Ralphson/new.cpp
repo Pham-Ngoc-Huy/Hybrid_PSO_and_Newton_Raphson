@@ -2,9 +2,9 @@
 #include <functional>
 #include <vector>
 #include <cmath>
+#include <random>
 
 using namespace std;
-
 class Function{
     protected:
         double h = 10e-10;
@@ -31,6 +31,36 @@ class Function{
             return (func(x + h) - func(x)) / h;
         }
 };
+//PSO - Particle Swarm Optimization Algorithm
+class PSO : public Function{
+    protected:
+        int numParticles;
+        int maxIterationPSO;
+        int maxIterationnr;
+        double epsilon = 1e-6;
+    public:
+        PSO(double (*f)(double), const double& xn_, const double&epsilon_) : Function(f), xn(xn_), epsilon(epsilon_){} //Update more
+        void setNumParticles(int& numParticles_){
+            numParticles = numParticles_;
+        }
+        void setmaxIterationPSO(int& maxIterationPSO_){
+            maxIterationPSO = maxIterationPSO_;   
+        }
+        void setmaxIterationnr(int& maxIterationnr_){
+            maxIterationnr = maxIterationnr_;
+        }
+        //member method
+        void POS_Loop(){
+            for (int i=0; i < numParticles; i++){
+                double particles = rand 
+            }
+        }
+
+
+};
+
+
+//Newton Raphson
 class NewtonRaphsonCalculation : public Function{
     protected:
         double epsilon;
