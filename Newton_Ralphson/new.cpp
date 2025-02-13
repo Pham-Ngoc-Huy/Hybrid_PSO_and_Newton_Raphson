@@ -3,11 +3,12 @@
 #include <vector>
 #include <cmath>
 #include <random>
+#include <cstdlib>
 
 using namespace std;
 class Function{
     protected:
-        double h = 10e-10;
+        double h = 1e-10;
         function<double(double)>func;
     public:
         //constructor
@@ -37,9 +38,11 @@ class PSO : public Function{
         int numParticles;
         int maxIterationPSO;
         int maxIterationnr;
-        double epsilon = 1e-6;
+        double epsilon;
+        double xn;
     public:
-        PSO(double (*f)(double), const double& xn_, const double&epsilon_) : Function(f), xn(xn_), epsilon(epsilon_){} //Update more
+        PSO(double (*f)(double), double xn_, double epsilon_) 
+        : Function(f), xn(xn_), epsilon(epsilon_) {}        
         void setNumParticles(int& numParticles_){
             numParticles = numParticles_;
         }
@@ -49,16 +52,26 @@ class PSO : public Function{
         void setmaxIterationnr(int& maxIterationnr_){
             maxIterationnr = maxIterationnr_;
         }
+        void ExtractMatrix(double& matrix[numParticles][numDimensions]){
+            for (int i=0; i< numParticles; i++){
+                for (int j=0; j < numDimensions; j++){
+                    cout<<matrix[i][j]<< "\t";
+                }
+                cout<<endl;
+                }
+        }
+        void 
         //member method
         void POS_Loop(){
             for (int i=0; i < numParticles; i++){
-                double particles = rand 
+                double particles = (rand()/ (double)RAND_MAX)*100;
+
+                cout<<"Particle" << i +1<< ":"<< particles <<endl;
             }
         }
 
 
 };
-
 
 //Newton Raphson
 class NewtonRaphsonCalculation : public Function{
