@@ -1,9 +1,8 @@
-#ifndef __NEWTON_RAPHSON__
-#define __NEWTON_RAPHSON__
-#include <iostream>
-#include "func.h"
-using namespace std;
+#ifndef NEWTONRAPHSON_H
+#define NEWTONRAPHSON_H
 
+#include "Function.h"
+using namespace std;
 class NewtonRaphsonCalculation {
 protected:
     Function& func;
@@ -11,9 +10,8 @@ protected:
     vector<double> xn;
 
 public:
-    NewtonRaphsonCalculation(Function& f, const vector<double>& initial_guess, double epsilon_)
-        : func(f), xn(initial_guess), epsilon(epsilon_) {}
-
+    NewtonRaphsonCalculation(Function& f, const vector<double>& initial_guess, double epsilon_);
     vector<double> findRoot();
 };
+
 #endif

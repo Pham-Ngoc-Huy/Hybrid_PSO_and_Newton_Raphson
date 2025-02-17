@@ -1,8 +1,15 @@
-#include <iostream>
 #include "pso.h"
-using namespace std;
+#include <iostream>
+#include <limits>
+#include <cstdlib>
 
-void PSO::initializeSwarm(){
+using namespace std;
+PSO::PSO(int n, int dim, int iter, double minX, double maxX, double inertia, double cognitive, double social, const Function& function)
+    : N(n), DIM(dim), max_iter(iter), minx(minX), maxx(maxX), w(inertia), c1(cognitive), c2(social), func(function) {
+    bestPosSwarm.resize(DIM);
+}
+
+void PSO::initializeSwarm() {
     srand(time(0));
     bestFitnessSwarm = numeric_limits<double>::max();
     for (int i = 0; i < N; i++) {
@@ -15,35 +22,29 @@ void PSO::initializeSwarm(){
     }
 }
 
-vector<double> PSO::optimize(){
+vector<double> PSO::optimize() {
     initializeSwarm();
     for (int iter = 0; iter < max_iter; iter++) {
-        for (int i = 0; i < N; i++) {
-            for (int d = 0; d < DIM; d++) {
+        for (auto& particle : swarm) {
+            for (size_t d = 0; d < particle.position.size(); d++) {
                 double r1 = (double) rand() / RAND_MAX;
                 double r2 = (double) rand() / RAND_MAX;
-                swarm[i].velocity[d] = w * swarm[i].velocity[d] +
-                                    c1 * r1 * (swarm[i].bestPos[d] - swarm[i].position[d]) +
-                                    c2 * r2 * (bestPosSwarm[d] - swarm[i].position[d]);
-                swarm[i].position[d] += swarm[i].velocity[d];
-                if (swarm[i].position[d] < minx) swarm[i].position[d] = minx;
-                if (swarm[i].position[d] > maxx) swarm[i].position[d] = maxx;
+                particle.velocity[d] = w * particle.velocity[d] +
+                                       c1 * r1 * (particle.bestPos[d] - particle.position[d]) +
+                                       c2 * r2 * (bestPosSwarm[d] - particle.position[d]);
+                particle.position[d] += particle.velocity[d];
             }
-            swarm[i].fitness = func.evaluate(swarm[i].position);
-            if (swarm[i].fitness < swarm[i].bestFitness) {
-                swarm[i].bestFitness = swarm[i].fitness;
-                swarm[i].bestPos = swarm[i].position;
+            particle.fitness = func.evaluate(particle.position);
+            if (particle.fitness < particle.bestFitness) {
+                particle.bestFitness = particle.fitness;
+                particle.bestPos = particle.position;
             }
-            if (swarm[i].fitness < bestFitnessSwarm) {
-                bestFitnessSwarm = swarm[i].fitness;
-                bestPosSwarm = swarm[i].position;
+            if (particle.fitness < bestFitnessSwarm) {
+                bestFitnessSwarm = particle.fitness;
+                bestPosSwarm = particle.position;
             }
         }
         cout << "Iteration: " << iter << " Best fitness: " << bestFitnessSwarm << endl;
     }
-    cout << "Best solution found by PSO: ";
-    for (double val : bestPosSwarm) cout << val << " ";
-    cout << endl;
     return bestPosSwarm;
 }
-
